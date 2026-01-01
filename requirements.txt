@@ -1,5 +1,7 @@
 langchain
 langchain-anthropic
+langchain-core
 fastapi
 uvicorn
 playwright
+pydantic

@@ -3,3 +3,6 @@ __pycache__/
 .env
 venv/
 .venv/
+logs/*.json
+logs/*.png
+!logs/.gitkeep

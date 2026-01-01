@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タスク管理</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .task-list {
+            margin-top: 30px;
+        }
+
+        .task-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .task-item.completed {
+            background: #d4edda;
+            text-decoration: line-through;
+        }
+
+        .message {
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>タスク管理</h1>
+
+    <form id="taskForm">
+        <div class="form-group">
+            <label for="taskName">タスク名</label>
+            <input type="text" id="taskName" name="taskName" placeholder="例: 牛乳を買う" required>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">優先度</label>
+            <select id="priority" name="priority">
+                <option value="low">低</option>
+                <option value="medium" selected>中</option>
+                <option value="high">高</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dueDate">期限</label>
+            <input type="date" id="dueDate" name="dueDate">
+        </div>
+
+        <button type="submit" id="submitBtn">タスクを追加</button>
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="task-list">
+        <h2>タスク一覧</h2>
+        <div id="tasks"></div>
+    </div>
+
+    <script>
+        const tasks = [];
+
+        document.getElementById('taskForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const task = {
+                name: document.getElementById('taskName').value,
+                priority: document.getElementById('priority').value,
+                dueDate: document.getElementById('dueDate').value,
+                completed: false,
+                id: Date.now()
+            };
+
+            tasks.push(task);
+            renderTasks();
+
+            document.getElementById('message').textContent = `タスク「${task.name}」を追加しました`;
+            document.getElementById('message').className = 'message success';
+
+            document.getElementById('taskForm').reset();
+        });
+
+        function renderTasks() {
+            const container = document.getElementById('tasks');
+            container.innerHTML = tasks.map(task => `
+                <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                    <strong>${task.name}</strong>
+                    <br>優先度: ${task.priority} | 期限: ${task.dueDate || '未設定'}
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+
+</html>
