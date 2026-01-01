@@ -20,3 +20,6 @@ uvicorn agent:app --host 0.0.0.0 --port 8000
 
 - `GET /` - ステータス確認
 - `GET /ask?q=質問` - AIに質問
+
+
+

@@ -1,18 +1,18 @@
 import os
 from fastapi import FastAPI
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage
 
 app = FastAPI()
 
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash-exp",
-    google_api_key=os.getenv("GOOGLE_API_KEY")
+llm = ChatAnthropic(
+    model="claude-3-5-haiku-20241022",
+    api_key=os.getenv("ANTHROPIC_API_KEY")
 )
 
 @app.get("/")
 def read_root():
-    return {"status": "running", "message": "AI Agent API"}
+    return {"status": "running", "message": "AI Agent API (Claude)"}
 
 @app.get("/ask")
 def ask(q: str):
